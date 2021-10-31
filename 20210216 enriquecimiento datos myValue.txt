@@ -1,0 +1,149 @@
+20210216 enriquecimiento datos myValue.txt
+
+enriquecen informacion financiera
+
+categorias: ingresos, gastos, ingresos estimados, gastos estimados, organizados en arbol
+
+PFM --> arbol de informacion para particulares
+BFM --> arbol de informacion para empresas
+
+PFM - 3 niveles de profundidad // 300 categorias
+BFM - 2 niveles de profundidad // categorias de naturaleza contable
+
+se deja sin categoria cuando el movimiento no se esta seguro de como clasificarlo
+
++++ejemplos de categoria para proveedores:
+
+provider: estacion de servicio almeria
+marca: bp
+
+provider: fernando lopez
+marca: mercadona
+
+campos del provider: geolocalizacion (latitud, longitud), ciudad, sitio, provincia, region (comunidad auntonoma, adaptado para distintos paises), pais
+
++++informacion q infieren:
+sector de actividad (pero no del CNAE)
+a cada marca se le asgina un sector de actividad real.
+por ej +tienda de ropa infantil en el cnae dirian tienda de ropa
+
+infieren la forma de pago (paypal, tarjeta, recibos)
+
+informacion adicional: es un cajon desastre de categorias (por ejemplo comision de prestamo)
+
+es un motor de categorizacion de informacion de ingresos y gastos de cada empresa a tiempo pasado
+myValue intenta detectar proveedores recurrentes o de recibos (luz, prestamo, comunidad de vecinos)
+hasta ahora, apoyados en el pasado hacian predicciones de tesoreria a 3 meses maximo ---> 
+
+!!!***afinar estas proyecciones mediante series temporales --> PRIORIDAD: dar mayor precision a la proyeccion de gastos e ingresos con series temporales --> al ver las categorias veremos q categorias se pueden proyectar o no
+***importante para myValue es generar insights de cosas a futuro
+!!!***una vez q tienen el datos enriquecido en myValue quieren darle insights
+///aromerales me ha dado un documento de insights PFM de historicos y a futuro
+
+calcular de forma eficientada --> generar insights
+
+en myValue tienen millones y millones de movimientos
+
+los bancos quieren quitarse de lios con los calculos de los insights
+los calculos generalmente estaran hechos en la infraestructura del cliente
+el dato bancario es muy sensible
+salvo el banco de santander q tendran un cloud interno, el 90% de los calculos los vamos a hacer en la infraestructura del cliente on-premise
+
+COSAS Q PODER HACER CON BIG-DATA
+***por ejemplo detectar si un usuario se sale de su zona economica (viaje de vacaciones a torrevieja)
+***detectar los habitos del usuario (por ej cada verano se va siempre al mismo sitio y se gasta 1000 eur)
+
+***hacer patrones de gasto segun el sector de actividad:
+		- si se gasta mucho o poco dinero en:
+			+ bicicletas
+			+ tiendas de running
+			+ restaurantes biosaludables
+			+ hacer tipologías de cliente
+
+loq ahora tiene myValue es un categorizador supervisado --> la parte supervisada es la importante
+	en myValue han querido hacer su propio conocimiento
+	el categorizador infiere sobre textos e importes
+	por ejemplo: detectar el comercio mercadona y dar de alta el comercio
+
+
+NULA PRIORIDAD: ***leer personetics - the ultimate banking guide
+
+20210222 aromerales me dio un maestro de sectores de actividad 
+
+
+
+
+
+
+20210222 REUNION INICIACION ANDRES ROMERALES (CARTA A LOS REYES MAGOS)
+
+***PRIORIDAD:
+<<<<
+proyeccion series temporales de posicion tesoreria de un cliente que nos esta afectando:
+
+roberto garcia de backend llevo a codigo los modelos que usamos (definidos por jesus besada series sarima o algo asi o una regresion lineal) --> puede ser que jbesada definiera modelos mas sofisticados pero no fueron llevados a cabo
+>>>>
+
+HOJA DE RUTA:
+***1o tener reunion con roberto garcia --> ver q tenemos y ver q se puede mejorar
+a lo mejor el modelo de jesus besada no fue integrado en el backend
+
+***2o documento insights aromerales --> automatizar y generar modelos y calculos --> elementos para que un usuario gestione sus finanzas con operaciones basicas + - * /
+<<<<
+-quien tiene q hacer los calculos (el banco cliente, myValue)
+-donde se hacen los calculos (en la nube, en la nube de cliente, on premise en las instalaciones de cliente, en maquinas de myValue, en nube de myValue)
+-externalizado (en una infraestructura aparte) de nuestro modelo de datos (mediante un microservicio) (estructura = modelo de datos)
+----> bankia te chuta los datos
+----> tiramos de nuestra infraestructura (de nuestros datos)
+
+los bancos tipicos que son clientes de myValue suelen tener 0.5M - 2M de clientes
+
+bankia tiene 7M de clientes y cada cliente tiene unas 300-500 transacciones al año
+si tomamos media de 400 transacciones al año bankia puede tener 2800M de transacciones al año
+la caixa tiene 13M de clientes
+ahora que bankia ha comprado a la caixa seran 20M de clientes --> 8000M de transacciones al año
+
+>>>>
+
+a lo mejor tengo que hacer un script a una base de datos PFM --> saco datos de esa base de datos y tambien saco insights
+a lo mejor tengo que sacar datos por colas y por apis
+
+un cliente podria tener:
+<<<<
+una api.
+dejarte un fichero en un sitio cada dia.
+o tener un kafka alq suscribirte
+>>>>
+
+la gente estara comoda en la nube?
+los bancos generalmente prefieren instalaciones on-premise --> q ningun dato salga de su perimetro seguro
+
+2a parte del calculo sencillo + - * / habra q hacer un modelo tetris --> solucion adaptable a distintos clientes
+
+3a parte --> movimientos transacciones bancarias --> etiqueta 'viaje' 'viaje a canarias' 'viaje de vacaciones de verano'
+
+no es un trabajo de un dia ni de una plataforma y se necesitaran una serie de recursos de tipo tipo personales/materiales
+
+hacer un push al usuario para q inicie una accion --> hayq empujarlo --> por ej detectando de manera automatica un evento recurrente del usuario
+
+por ej: la mayoria de movimientos son de madrid mostoles y alcorcon y de repente hay 5 movimientos en paris --> crear etiqueta 'paris' y hacer un push/pregunta al usuario: ¿hemos detectado 3 movimientos en paris? ¿hay alguno mas?
+
+por ej: tenemos 3 años de historicos --> un cliente se va todos los meses de agosto a salou (pq vemos q tiene movimientos en salou) --> de manera previa le podemos avisar dq ahorre 1500 euros para el viaje q viene de salou --> tb le podemos avisar dq va a llegar un viaje a salou
+
+podemos detectar patrones: por ejemplo q todos los fds se va de viaje
+
+plantearle objetivos y metas de ahorro
+detectar/encontrar patrones --> crear desde cero
+
+otras cosas: ver incrementos crecimiento decrecimiento de gastos o en una categoria --> crear desde cero
+
+categorizar
+
+detectar qte vas de vacaciones en agosto --> q un año te gastas 1000 eur y otro año te gastas 1600 eur --> quiza aprendizaje no supervisado por localizacion
+
+detectar un traspaso autonomico en los gastos --> por ej te vas de viaje a galicia pero se detecta tb q has echado gasolina en valladolid a la ida y en leon a la vuelta
+
+
+
+
+

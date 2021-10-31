@@ -1,0 +1,164 @@
+
+GMEET AGOSTO 2021
+<<<<
+Alejandro Calle, mar 13:16
+he buscado los selects que usé la anterior vez para generar los Excels de Pedro y no he encontrado
+Debí perderlo todo en el cambio de ordenador
+
+Samuel López, mar 13:17
+Pues los hacemos de nuevo, con los datos, que nos diga Pedro
+Si usas el dbeaver, se quedan guardados en la carpeta scripts
+por si acaso están por ahí
+
+Pedro Tobarra, mar 14:14, Editado
+por favor, de las siguientes opciones de la imagen ¿cual es el tipo de base que hay que poner desde las que os bajais los datos?
+
+os recuerdo los datos de conexion a la base de datos excepto la contraseña:
+Los datos de conexión a la base de datos whitetools_pfm que usamos son estos:
+Host: 10.15.6.11
+Port: 1433
+Database: whitetools_pfm
+User name: whitetools
+Password: wh1t3t00ls
+
+Alejandro Calle, mar 14:15
+SQL Server
+
+Pedro Tobarra, mar 14:15
+gracias
+
+Samuel López, mar 14:17
+SQl Server
+
+Alejandro Calle, Ayer 11:57
+buenas
+ya creé el proyecto en Gitlab y estoy trabajando en esta rama
+https://adelman.ad.fpnatools.com/fpna/pfm/pfm-statistics/-/tree/fb-1-servicio-de-estadisticos-para-pfm
+de momento ahí he subido el código para conectarse a la base de datos (Oracle, SQL Server, MySQL y Postgresql)
+también está creado ya el método que le pasas la conexión a la base de datos y una query y te devuelve un data frame de Pandas
+
+Samuel López, Ayer 14:57, Editado
+Alejandro he actualizado la rama (https://adelman.ad.fpnatools.com/fpna/pfm/pfm-statistics/-/tree/fb-1-servicio-de-estadisticos-para-pfm) añadiendo el fichero de requirements que te comentaba
+Y tb he añadido las instrucciones para usar el entorno virtual en el README
+he probado tú código con las librerías que he puesto en el archivo, y me ha funcionado bien
+SI ves que me falta alguna librería, añadela a ese archivo
+
+Alejandro Calle, Ayer 15:07
+Ok, gracias
+yo ahora estoy mirando cómo montar los endpoints
+
+Pedro Tobarra, Ayer 15:08
+Ahora voy a comer, pero, por favor, mañana hacemos una reunion y me lo contais todo que no quiero perder comba.
+Saludos.
+
+Alejandro Calle, Ayer 15:08
+ok
+>>>>
+
+20210812 REU SAMUEL LOPEZ
+<<<<
+con 'git stash' te guardas una copia en local de loq tengas en tu rama para hacerte un pull o un merger a la misma y poder trabajar con otra version o en otra cosa
+con 'git stash pop' te vuelves a traer loq tenia guardado en tu stash y, presumiblemente lo mergeas con loq tengas puesto ne tu rama en local
+
+.gitignore
+<<<<<<<<
+__pycache__/
+controllers/__pycache__/
+database/__pycache__/
+manager/__pycache__/
+.git/
+env/
+.idea/
+>>>>>>>>
+
+en un .gitignore debes poner los ficheros de directorios del cache de python '__pycache__', los en entorno 'env', los del ide '.idea', y los propios de la configuracion de git '.git'
+
+para q en un proyecto de directorio python una carpeta se considere como una libreria de proyecto debes incluir en la carpeta un fichero vacio '__init__.py' --> y en el py charm en lugar de en una carpeta te saldra como una carpeta con un punto dentro lo cual indica q se trata de una libreria --> en nuestro proyecto es el caso de la carpeta 'controllers'
+
+para q un script '.py' lea el contenido de la carpeta-libreria 'controller' hayq sacarlo al mismo nivel q ésta carpeta.
+
+import sys --> era un import q samuel lopez pueso para hacer cosas con rutas relativas
+
+los directorios '__pycache__' son aquellos donde los proyectos de python cachean archivos para ir mas rapido la proxima vez q ejecutes los scripts
+
+Resuelva el mensaje No Module Named XXX al ejecutar el script .py en PyCharm
+https://programmerclick.com/article/64821747076/
+
+stack overflow: python - module not found
+https://stackoverflow.com/questions/37233140/python-module-not-found
+>>>>
+
+
+
+
+20210813 REU ACALLE SLOPEZ
+<<<<
+en .\database\database_connection.py --> se encuentra el metodo 'def get_database_connection():' para coger los parametros de conexion a la base de datos en linea 9:
+
+def get_database_connection():
+    properties = properties_manager.load_properties(constants.PROPERTIES_FILE_PATH)
+    # print(properties)
+
+    type = properties.get("database_type")
+    server = properties.get("server")
+    database = properties.get("database")
+    username = properties.get("username")
+    password = properties.get("password")
+    driver = properties.get("driver")
+
+    if type == constants.SQL_SERVER_DATABASE:
+        connection = pyodbc.connect('DRIVER=' + driver + ';SERVER=' + server + ';DATABASE=' + database + ';UID=' + username + ';PWD=' + password)
+    elif type == constants.MYSQL_DATABASE:
+        connection = mysql.connector.connect(host=server, user=username, password=password, database=database)
+    elif type == constants.POSTGRESQL_DATABASE:
+        connection = psycopg2.connect(host=server, database=database, user=username, password=password)
+    elif type == constants.ORACLE_DATABASE:
+        connection = get_connection_to_oracle_database(properties)
+        #connection = cx_Oracle.connect(user=username, password=password, dsn= '"' + server + '"')
+    #cursor = connection.cursor()
+
+    #cursor.execute('SELECT * FROM t_alert_types')
+    #columns = [column[0] for column in cursor.description]
+    #print(columns)
+    #for row in cursor:
+    #    print(row)
+    return connection
+
+el 'print(properties)' lo he dejado comentado para que no se impriman por pantalla los datos de conexion a la base de datos (se imprimian para depurar)
+
+
+
+
+en .\manager\pandas_manager.py --> se encuentra el metodo 'def transforma_cursor_to_pandas(query_string, database_connection):' en el que lee la query de conexion a la base de datos y devuelve el dataframe leido por la query
+
+el 'print(data_frame)' que esta justo debajo de 'data_frame = pandas.read_sql(query_string, database_connection)' es para imprimir por pantalla el dataframe q ha leido de la base de datos; lo he dejado comentado pq era para depurar
+
+def transforma_cursor_to_pandas(query_string, database_connection):
+    # pandas.set_option('display.max_rows', 12)
+    # pandas.set_option('display.max_rows', None)
+    pandas.set_option('display.max_columns', None)
+    pandas.set_option('display.width', None)
+    pandas.set_option('display.max_colwidth', None)
+    data_frame = pandas.read_sql(query_string, database_connection)
+    # print(data_frame)
+    return data_frame
+
+
+
+
+Ya mejor que acalle no toque el dataframe q me ha dado pq cada vez q lo toca tengo q adaptar yo el script para coger los nuevos datos del nuevo dataframe
+loq si le he pedido a acalle esq me ponga en una proxima version del dataframe el valor de 'BALANCE' y 'BALANCE_DATE' q en excel '20210513 mmelero (249236).xlsx' se encuentran en celdas P2 y Q2. (al final quedas con acalle q el ID de usuario q en '20210513 mmelero (249236).xlsx' se encuentra en O2 no lo va a pasar por el dataframe)
+
+a acalle le queda pendiente en codigo cerrar la conexion con la base de datos
+
+en gitlab no puedes ser 'technical owner' de un 'merge request' de una rama si ya has hecho push de commits a esa rama
+
+integracion con backend
+<<<<<<<<
+- la respuesta del string q es un booleano y un string luego en backend se escriben en un json
+- desde el endpoint del backend a la funcion le tiene q llegar el usuario (la fecha la puede calcular el propio script)
+
+***te queda modificar el script paraq calcule el mismo la fecha en lugar de estar puesta a pelo
+>>>>>>>>
+
+>>>>

@@ -1,0 +1,10 @@
+Los datos de conexión a la base de datos whitetools_pfm que usamos son estos:
+Connector: SQL Server
+Host: 10.15.6.11
+Port: 1433
+Database: whitetools_pfm
+User name: whitetools
+Password: wh1t3t00ls
+
+La tabla donde obtenemos los datos, es t_transactions, con su foreign key a t_categories, y a t_trademarks, que creo que son las necesarías para los datos que usas.
+

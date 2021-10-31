@@ -1,0 +1,299 @@
+TRANSACCIONES CUENTA 2017 - 2020 ///////////////////////////////
+
+"""
+# la transaccion minima en un dia dado es de -2529.33 eur
+# la transaccion maxima en un dia dado es es 3964.43 eur
+
+# la suma minima de transacciones en un dia dado es de -2588.33 eur (habra 2 o mas transacciones en este dia)
+# la suma maxima de transacciones en un dia dado es de 3555.29 eur (habra 2 o mas transacciones en este dia)
+
+# seria util buscar la fecha de estas transacciones
+"""
+
+count    1095.000000
+mean       -5.590420
+std       338.607174
+min     -2588.840000
+25%       -29.240000
+50%         0.000000
+75%         0.000000
+max      3555.290000
+Name: IMPORTE, dtype: float64
+"""
+la media de suma de transacciones por dia es de -5.59 (antes -1.87) eur
+la std es de 338.60 (antes 327.19)
+
+el 68.2% de los dias la suma de transacciones esta entre -344.19 eur y 333.01 eur (antes -329.07 eur y 325.31 eur)
+el 95.4% de los dias la suma de transacciones esta entre -682.80 eur y 671.62 eur (antes -656.27 eur y 652.51 eur)
+el 99.6% de los dias la suma de transacciones esta entre -1021.41 eur y 1010.23 eur(antes -983.47 eur y 979.71 eur)
+
+el 25% de los dias la suma de transacciones es inferior a -29.24 eur (antes -22.84 eur)
+el 50% y 75% de los dias la suma de transacciones es inferior a 0 eur
+
+el minimo de las sumas de transacciones en un dia es de -2588.84 eur
+el maximo de las sumas de transacciones en un dia es de -3555.29 eur
+
+EN RESUMEN: la nueva distribucion de datos es casi igual a la anterior (un poco más negativa y con datos un poco más dispersos)
+"""
+
+
+PLOTS TEPORALES DE LA LINEA DE LA CUNTA POR AÑOS
+"""
+Vemos que hay cierta estacionalidad en los ingresos importantes de esta cuenta.
+Tambien un poco en los gastos mas importantes de la cuenta.
+"""
+
+HISTOGRAM
+"""
+este histograma nos muestra q el 95% de las transacciones estan entre -680 y +680 eur y las q estan fuenta de este intervalo
+(sobre todo los ingresos pueden considerarse outliers).
+"""
+
+DENSITY PLOT
+"""
+Este density plot nos muestra q la mayoria de las transacciones (al menos el 50%) están entre -30 eur y 0 eur.
+El 68% de las transacciones entre -340 eur y +340 eur siendo probablemente más de la mitad negativas.
+El 95% de las transacciones entre -680 eur y +680 eur siendo probablemente más de la mitad negativas.
+"""
+
+BOXPLOTS POR AÑOS DE CADA AÑO
+"""
+Vemos que el rango intercuartilico es muy proximo a cero.
+Entre las 3 distribuciones el 50% de los datos son transacciones de -29.24 eur a 0 eur --> IQR = [-29.24, 0].
+Es decir que Q3 + 1.5*IQR = 0 + 1.5*29.24 = 34.86 eur es el valor a partir del cual todas las transacciones mayores son outliers
+Y Q1 - 1.5*QR = -29.24 - 1.5*29.24 = -73.1 eur es el valor a partir del cual todas las transacciones menores son outliers.
+"""
+
+BOXPLOTS POR MESES DE CADA AÑO
+"""
+Vemos que todos los meses hay uno dos outliers de entre 1000 o 2000 euros que suele ser la nomina.
+Hay cierta repetibilidad/estacionalidad en los ingresos
+"""
+
+MAPA COLOR DE LOS 3 AÑOS POR DIAS
+"""
+Mas o menos se pueden apreciar 12 rayas amarillas brillantes que pueden ser 12 momentos del año en los que cobro una nomina.
+"""
+
+MAPA DE COLOR DE CADA AÑO POR MESES
+"""
+Vemos que la mayoria de cuadrados verdes claros están entre el dia 1 y 5 de cada mes.
+Salvo las siguientes 5 transacciones puntuales en la que tiene ingresos muy altos:
+13 junio 2017
+5 marzo 2018
+9 abril 2019
+6 noviembre 2019
+20 diciembre 2019
+"""
+
+SCATTER PLOT
+"""
+Vemos que no hay correlacion entre una observacion y la misma hasta en 12 instantes anteriores teniendo todos los lag scatter
+plots valores muy parecidos.
+"""
+
+AUTOCORRELATION PLOT
+"""
+Vemos que hay ciclos de correlacion positiva y negativa débil. Y esta se va perdiendo a medida que vamos atrás en el tiempo.
+"""
+
+SALDO CUENTA 2017 - 2020 ///////////////////////////////
+
+SALDO CUENTA 2017 - 2020
+"""
+vemos que es una cuenta corriente que llega a tener saldos negativos 
+***POR TANTO PODEMOS HACER UNA DETECCION POR DESCUBIERTO QUIZA
+"""
+
+SALDO CUENTA 2017 - 2020
+count	1095.000000
+mean	2590.907817
+std		1845.537989
+min		-1569.210000
+25%		2088.070000
+50%		3021.090000
+75%		4068.460000
+max		6733.710000
+
+"""
+distribucion simetrica_ moda = mediana = media
+distribucion asimetrica positiva es asimetrica o sesgada a la derecha (cola larga a la derecha): moda > mediana > media
+distribucion asimetrica negativa es asimetrica o sesgada a la izquierda (cola larga a la izquierda): moda > mediana > media
+"""
+
+"""
+el saldo medio es 2590 eur
+la mediana o 2o cuartil es 3021 eur
+distribucion es asimetrica negativa o sesgada a la izquierda: mediana > media
+
+std es 1845 eur con lo que:
+el 68.0% de los datos estan entre 745 eur y 4435 eur
+el 95.5% de los datos estan entre -1100 eur y 6280 eur
+el 97.7% de los datos estan entre -2945 eur y 8125 eur
+
+el saldo minimo es -1569 eur
+el saldo maximo es 6733 eur
+
+la diferencia entre media y mediana es de 3021 - 2590 = 431 eur y el IQR es 4068 - 2088 = 1980 eur
+podria ser una distribucion mas o menos normal
+"""
+
+GRAFICA SERIE TEMPORAL SALDO CUENTA 2017 - 2019
+"""
+durante 2017 y 2018 el saldo tiene una linea base ligeramente negativa hasta abril de 2019.
+
+en abril de 2019 parece que deja de haber ingresos y tiene una rapida pendiente negativa has julio de 2019 donde se estabiliza.
+
+en diciembre de 2019 el usuario hace una transferencia para volver a poner el saldo de la cuenta en positivo.
+
+desde 2017 hasta abril de 2019 parece que la serie temporal tiene cierta temporalidad en los ingresos.
+
+***para trabajar con la serie quiza seria mas propicio cogerse solo los años 2017 y 2018 pues tienen tendencia y estacionalidad
+aproximadamente repetida
+"""
+
+GRAFICA SERIE TEMPORAL SUPERPONIENDO AÑOS 2017 - 2018 - 2019
+"""
+Vemos que hay una clara estacionalidad en 2017 y 2018 donde las series estan practicamente superpuestas tambien hasta abril 
+2019. 
+
+Vemos que hay una ligera tendencia negativa desde enero 2017 hasta abril 2020.
+
+A partir de mayo 2019 hasta junio hay una fuerte caida y la cuenta se queda sin movimientos hasta septiembre que tiene unos
+ingresos y gastos pequeños y a finales de 2019 hay un importante ingresos que vuelve a poner el saldo en positivo.
+
+***se podria hacer una prediccion temporal a 3 meses partir del dia 100 (abril de 2019) y dar un aviso por descubierto
+"""
+
+HISTOGRAMA SERIE TEMPORAL AÑOS 2017 - 2018 - 2019
+"""
+El histograma con tan pocos datos normalmente sale bastante poco descriptivo y podremos sacar mas conclusiones cuando veamos el
+grafico de densidad.
+
+No obstante vemos muy claramente como la mitad de las muestras del saldo estan entre 2088 y 4068 eur que es el rango 
+intercuartilico.
+"""
+
+DIAGRAMA DENSIDAD AÑOS 2017 - 2018 - 2019
+"""
+Vemos que en las distribuciones de estos 3 años hay muy poco outliers y suelen ser por observaciones positivas que
+corresponderan a ingresos de dinero.
+
+La mediana de 2017 es de unos 4000 eur y su IQR entre 3000 y 4500 eur.
+Los whiskers estan entre 2000 y 5500 eur y hay unos pocos outliers por encima de 6000 eur.
+
+La mediana de 2018 es de unos 3000 eur y su IQR entre 2500 y 3500 eur.
+Los whiskers estan entre 2000 y 5000 eur y hay varios outliers por encima de 5000 eur.
+
+Más o menos podríamos decir que los años 2017 y 2018 se parecen pero los datos del año 2018 estan más agrupados que los del 
+2017.
+
+El año 2019 es muy distinto años anteriores.
+La mediana de 2019 esta cercana a 0 euros y su IQR entre -200 eur y 2000 eur.
+Los whiskers estan entre -800 eur y 4000 eur y no tiene outliers aunque su IQR es mucho mas amplio que en años anteriores.
+
+Corroboramos como con el diagrama de densidad que parece que los años 2017 y 2018 tienen una distribucion y el año 2019 otra.
+"""
+
+BOXPLOTS POR AÑO 2017 - 2018 - 2019
+"""
+2017:
+Vemos que hay una trend ligeramente negativa donde mediana va desde 3000 eur a 5000 eur.
+La mayoria de los IQR de todos los meses se encuentran entre 3000 y 5000 eur.
+Hay pocos outliers y la mayoria de ellos estan por encima del IQR de su mes con lo que son provocados por ingresos.
+
+##########
+
+2018:
+Vemos que hay una trend ligeramente negativa pero menos que en 2016 donde mediana va desde 3500 eur a 2700 eur.
+La mayoria de los IQR de todos los meses se encuentran entre 2500 y 4000 eur salvo en agosto en el que hubo muchos ingresos.
+También es notable un gran ingreso de 6000 eur en marzo de 2017.
+Hay pocos outliers y la mayoria de ellos estan por encima del IQR de su mes con lo que son provocados por ingresos; 
+excepto en noviembre y diciembre donde debio haber unos gastos de mayor cuantia concretos pero estos se consideran outliers
+porque el IQR de esos meses es muy pequeño (datos muy agrupados). Además estos outliers no estan muy separados de las medianas
+de sus respectivos meses (en noviembre 2300 eur respecto a 3000 eur; en diciembre 2300 eur frente a 2700 eur).
+
+Se puede decir que 2017 y 2018 son dos años que se parecen bastante.
+
+##########
+
+2019:
+Hasta marzo se continua el comportamiento y la tendencia de 2018.
+Desde abril 2019 hasta julio 2019 hay una fuerte tendencia negativa.
+En julio y agosto de 2019 no hay movimientos.
+Desde junio 2019 la mediana de la cuenta es negativa y de junio a noviembre con un IQR claramente en numeros negativos Q1 y Q3.
+Desde septiembre a noviembre hay muy ligera tendencia negativa en el saldo.
+En diciembre el IQR es más amplio llegando a estar el 3er cuartil en valores positivos (aprox. 500 eur) debido a unos ingresos
+en cuenta destinados a poner en positivo el saldo de la cuenta.
+"""
+
+"""
+De acuerdo a lo que hemos visto de los datos hasta ahora lo más probable es que utilice 2017 y 2018 como datos de training
+que pueden tener etiquetas (importe,categoria,fecha) donde el valor a predecir sea la fecha y 2019 como datos de test.
+"""
+
+MAPA DE CALOR POR AÑOS 2017 - 2018 - 2019
+"""
+Vemos que en 2017 y 2018 hay cierta estacionalidad en los ingresos que aproximadamente son unos 12 que podrían corresponder
+con la nómina.
+
+Vemos tambien muy claramente como en 2019 entre lo dias 125 (principios de abril) y 360 (finales de diciembre) el saldo de la
+cuenta toma valores claramente negativos.
+"""
+
+MAPAS DE CALOR POR MESES - AÑOS 2017 - 2018 - 2019
+"""
+Año 2017:
+Aproximadamente vemos que los principales ingresos se producen antes del dia 7 de cada mes.
+Excepto el 14 de junio de 2017 que hubo un ingreso muy importante.
+
+
+Año 2018:
+Vemos que aproximadamente los principales ingresos del mes (valores más altos del saldo) se producen antes del dia 10 de cada 
+mes excepto en marzo.
+
+
+Año 2019:
+No hay ingresos o subidas de saldo significativas excepto el 10 de mayo de 2019. Y a partir del 18 de diciembre de 2019.
+Vemos un descenso importante del saldo desde mayo 2019 hasta julio 2019 donde mas o menos el saldo se mantiene en un valor
+constante sin apenas ingresos o gastos.
+"""
+
+SCATTER PLOT CON SU LAG ANTERIOR: 2017 - 2018 - 2019
+"""
+Vemos que las observaciones forman una muy clara diagonal lo cual quiere decir que hay una gran correlacion entre y(t+1) e y(t)
+"""
+
+SCATTER PLOT CON SUS 48 LAGS ANTERIORES. AÑOS: 2017 - 2018 - 2019
+"""
+En general hay una correlacion muy clara entre y(t+1) y sus 48 lags anteriores para observaciones inferiores a 2000 eur; desde y(t+1) hasta y(t-48).
+
+Hay en general bastante buena correlacion entre y(t+1) y sus lags 't-28', 't-29', 't-30' y 't-31' lo cual es bastante favorable si queremos encontrar una fecha recurrente en la que te ingresen la nómina que suele ser mensual.
+
+Tambien vemos que hay una correlacion muy buena entre y(t+1) y sus 9 lags anteriores; desde y(t+1) hasta y(t-9)
+"""
+
+AUTOCORRELATION PLOT
+"""
+The resulting plot shows lag along the x-axis and the correlation on the y-axis.
+Dotted lines are provided that indicate any correlation values above those lines are statistically significant (meaningful).
+
+Vemos que hay correlacion estadisticamente significativa y positiva entre y(t+1) y sus 250 lags anteriores.
+Vemos que hay correlacion estadisticamente significativa y negativa entre los lags 450 y 1050 aproximadamente.
+
+Y vemos que hay fuerte correlacion positiva (coef > 0.5) hasta el lag 120 aproximadamente.
+
+Esta serie temporal es claramente modelizable sobretodo cogiendonos los años 2017 y 2018 que son los que más se parecen entre
+ellos.
+"""
+
+
+
+
+
+
+
+
+
+
+
